@@ -141,7 +141,7 @@ export default function ValuesSection() {
       // Use batch processing for better performance
       ScrollTrigger.batch('.value-section', {
         onEnter: (elements) => {
-          elements.forEach((section, index) => {
+          elements.forEach((section) => {
             const tl = gsap.timeline();
             
             // Optimize by setting initial states

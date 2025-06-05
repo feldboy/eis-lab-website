@@ -3,11 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import StyledComponentsRegistry from "../lib/registry";
 import GlobalStyles from "../styles/GlobalStyles";
-import Footer from "../components/Footer";
 import ClientThemeProvider from "../components/ClientThemeProvider";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { SEOProvider } from '../components/SEOProvider';
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const geistSans = Geist({
@@ -40,19 +40,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <StyledComponentsRegistry>
-          <ClientThemeProvider>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
+        <SEOProvider>
+          <StyledComponentsRegistry>
             <GlobalStyles />
-            <PageTransitionWrapper>
-              {children}
-            </PageTransitionWrapper>
-            <Footer />
-          </ClientThemeProvider>
-        </StyledComponentsRegistry>
+            <ClientThemeProvider>
+              <PageTransitionWrapper>
+                {children}
+              </PageTransitionWrapper>
+            </ClientThemeProvider>
+          </StyledComponentsRegistry>
+        </SEOProvider>
       </body>
     </html>
   );

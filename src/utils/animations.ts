@@ -11,6 +11,9 @@ interface FloatingAnimationOptions {
 }
 
 export function createFloatingAnimation(element: HTMLElement, options: FloatingAnimationOptions = {}) {
+  // Check if we're on the client side
+  if (typeof window === 'undefined' || !element) return null;
+  
   const defaults: Required<FloatingAnimationOptions> = {
     xRange: 15, // Reduced from 20 for smoother performance
     yRange: 10, // Reduced from 15 for smoother performance
@@ -52,10 +55,14 @@ export function createFloatingAnimation(element: HTMLElement, options: FloatingA
 }
 
 // New utility for batch animations to improve performance
-export function createBatchAnimation(elements: HTMLElement[], animation: any, staggerOptions: any = {}) {
+export function createBatchAnimation(
+  elements: HTMLElement[], 
+  animation: Record<string, unknown>, 
+  staggerOptions: Record<string, unknown> = {}
+) {
   const defaults = {
     amount: 0.1,
-    from: "start",
+    from: "start" as const,
     ease: "power2.out"
   };
   const settings = { ...defaults, ...staggerOptions };
@@ -64,6 +71,80 @@ export function createBatchAnimation(elements: HTMLElement[], animation: any, st
     ...animation,
     stagger: settings,
     force3D: true,
-    ease: animation.ease || settings.ease
+    ease: (animation.ease as string) || settings.ease
   });
+}
+
+// Page transition animations for Framer Motion
+export const pageTransitions = {
+  fadeSlide: {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
+    transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] }
+  },
+  
+  scale: {
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 1.05 },
+    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] }
+  },
+  
+  rotate: {
+    initial: { opacity: 0, rotateX: -15 },
+    animate: { opacity: 1, rotateX: 0 },
+    exit: { opacity: 0, rotateX: 15 },
+    transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] }
+  }
+};
+
+// Text animation utilities
+interface TextRevealOptions {
+  duration?: number;
+  ease?: string;
+  stagger?: number;
+  delay?: number;
+}
+
+export function createTextRevealAnimation(element: HTMLElement, options: TextRevealOptions = {}) {
+  const defaults = {
+    duration: 1,
+    ease: "power2.out",
+    stagger: 0.05,
+    delay: 0
+  };
+  const settings = { ...defaults, ...options };
+
+  // Split text into characters/words (manual implementation)
+  const text = element.textContent || '';
+  const words = text.split(' ');
+  
+  element.innerHTML = words.map(word => 
+    `<span class="word">${word.split('').map(char => 
+      `<span class="char">${char}</span>`
+    ).join('')}</span>`
+  ).join(' ');
+
+  const chars = element.querySelectorAll('.char');
+  
+  gsap.fromTo(chars, 
+    { 
+      opacity: 0, 
+      y: 50,
+      rotationX: -90
+    },
+    {
+      opacity: 1,
+      y: 0,
+      rotationX: 0,
+      duration: settings.duration,
+      ease: settings.ease,
+      stagger: settings.stagger,
+      delay: settings.delay,
+      transformOrigin: "center bottom"
+    }
+  );
+
+  return gsap.timeline();
 }

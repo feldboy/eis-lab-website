@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { gsap } from 'gsap';
+import { createTextRevealAnimation } from '../utils/animations';
 const CurvedTextContainer = styled.div`
   width: 100%;
   display: flex;
@@ -36,59 +37,125 @@ const StyledSVG = styled.svg`
   }
 `;
 
-const CurvedText: React.FC = () => {
+interface CurvedTextProps {
+  text?: string;
+  radius?: number;
+  fontSize?: number;
+  animate?: boolean;
+  direction?: 'clockwise' | 'counterclockwise';
+}
+
+const CurvedText: React.FC<CurvedTextProps> = ({ 
+  text = "Environmental Information Systems Lab", 
+  radius = 200, 
+  fontSize = 24,
+  animate = true,
+  direction = 'clockwise'
+}) => {
   const svgRef = useRef<SVGSVGElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (svgRef.current) {
+    if (svgRef.current && animate) {
       const textPath = svgRef.current.querySelector('#textPath');
-      gsap.fromTo(textPath,
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: svgRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Animate the text path
+      timeline.fromTo(textPath,
         {
-          attr: { startOffset: '100%' }
+          attr: { startOffset: direction === 'clockwise' ? '100%' : '0%' }
         },
         {
-          attr: { startOffset: '0%' },
+          attr: { startOffset: direction === 'clockwise' ? '0%' : '100%' },
           duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: { // Add scroll trigger for curved text
-            trigger: svgRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
+          ease: "power2.out"
         }
       );
-    }
-  }, []);
 
-  const text = "Environmental Information Systems Lab";
-  const radius = 200; // Example radius
+      // Add rotation animation to the entire SVG
+      timeline.fromTo(svgRef.current,
+        { rotation: 0 },
+        { 
+          rotation: direction === 'clockwise' ? 360 : -360, 
+          duration: 20, 
+          ease: "none",
+          repeat: -1 
+        },
+        0
+      );
+    }
+
+    // Add text reveal animation for supporting text
+    if (textRef.current && animate) {
+      createTextRevealAnimation(textRef.current, {
+        duration: 0.8,
+        stagger: 0.02,
+        delay: 0.5
+      });
+    }
+  }, [animate, direction]);
+
+  // Calculate path for different directions
+  const getPathData = () => {
+    const centerX = 250;
+    const centerY = 250;
+    
+    if (direction === 'clockwise') {
+      return `M ${centerX - radius},${centerY} A ${radius},${radius} 0 1,1 ${centerX + radius},${centerY} A ${radius},${radius} 0 1,1 ${centerX - radius},${centerY}`;
+    } else {
+      return `M ${centerX + radius},${centerY} A ${radius},${radius} 0 1,0 ${centerX - radius},${centerY} A ${radius},${radius} 0 1,0 ${centerX + radius},${centerY}`;
+    }
+  };
 
   return (
     <CurvedTextContainer>
       <StyledSVG ref={svgRef} viewBox="0 0 500 500">
+        <defs>
+          <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="var(--color-navy)" />
+            <stop offset="50%" stopColor="var(--color-primary-purple)" />
+            <stop offset="100%" stopColor="var(--color-light-blue)" />
+          </linearGradient>
+        </defs>
         <path
           id="curve"
-          d={`M 50,250 A ${radius},${radius} 0 1,1 450,250 A ${radius},${radius} 0 1,1 50,250`}
+          d={getPathData()}
           fill="transparent"
+          stroke="rgba(30, 26, 74, 0.1)"
+          strokeWidth="1"
         />
         <text width="500">
-          <textPath id="textPath" href="#curve" fontSize="24" fill="var(--color-navy)" textAnchor="middle" startOffset="0%">
-            <tspan className="responsive-text">{text}</tspan>
+          <textPath 
+            id="textPath" 
+            href="#curve" 
+            fontSize={fontSize} 
+            fill="url(#textGradient)" 
+            textAnchor="middle" 
+            startOffset="0%"
+            fontWeight="bold"
+          >
+            {text}
           </textPath>
         </text>
-        <style jsx>{`
-          @media (max-width: 768px) {
-            .responsive-text {
-              font-size: 20px;
-            }
-          }
-          @media (max-width: 480px) {
-            .responsive-text {
-              font-size: 16px;
-            }
-          }
-        `}</style>
       </StyledSVG>
+      
+      {animate && (
+        <div ref={textRef} style={{ 
+          textAlign: 'center', 
+          marginTop: '2rem', 
+          color: 'var(--color-navy)',
+          fontSize: '1.2rem',
+          fontWeight: '300'
+        }}>
+          Innovation in Motion
+        </div>
+      )}
     </CurvedTextContainer>
   );
 };
