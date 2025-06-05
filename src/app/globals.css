@@ -1,0 +1,15 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Remove default Next.js styles if any */
+/* You might want to keep some of these if they are useful */
+/* For now, I'm keeping it minimal to allow styled-components to take over */
