@@ -12,12 +12,30 @@ const ContactContainer = styled.section`
   background-color: var(--color-light-blue);
   color: var(--color-navy);
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
   font-size: 3rem;
   margin-bottom: 2rem;
   color: var(--color-navy);
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const ContactContent = styled.div`
@@ -35,6 +53,20 @@ const ContactContent = styled.div`
     text-decoration: underline;
     &:hover {
       color: var(--color-purple);
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    max-width: 500px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    max-width: 100%;
+    
+    p {
+      margin-bottom: 0.8rem;
     }
   }
 `;

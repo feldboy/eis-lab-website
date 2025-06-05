@@ -12,12 +12,30 @@ const TeamContainer = styled.section`
   background-color: var(--color-white);
   color: var(--color-navy);
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
   font-size: 3rem;
   margin-bottom: 2rem;
   color: var(--color-navy);
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const TeamGrid = styled.div`
@@ -26,6 +44,16 @@ const TeamGrid = styled.div`
   gap: 2rem;
   max-width: 1000px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const TeamMemberCard = styled.div`
@@ -34,24 +62,51 @@ const TeamMemberCard = styled.div`
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const MemberName = styled.h3`
   font-size: 1.5rem;
   color: var(--color-navy);
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
 `;
 
 const MemberRole = styled.p`
   font-size: 1rem;
   color: #555;
   margin-bottom: 1rem;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+  }
 `;
 
 const MemberDescription = styled.p`
   font-size: 0.9rem;
   line-height: 1.4;
   color: #333;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
 `;
 
 

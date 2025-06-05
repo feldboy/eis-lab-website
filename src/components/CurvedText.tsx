@@ -12,12 +12,28 @@ const CurvedTextContainer = styled.div`
   background-color: var(--color-white);
   color: var(--color-navy);
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem 0;
+  }
 `;
 
 const StyledSVG = styled.svg`
   width: 100%;
-  height: 500px; /* Adjusted height to accommodate the circle */
+  height: 500px;
   overflow: visible;
+
+  @media (max-width: 768px) {
+    height: 400px;
+  }
+
+  @media (max-width: 480px) {
+    height: 300px;
+  }
 `;
 
 const CurvedText: React.FC = () => {
@@ -57,9 +73,21 @@ const CurvedText: React.FC = () => {
         />
         <text width="500">
           <textPath id="textPath" href="#curve" fontSize="24" fill="var(--color-navy)" textAnchor="middle" startOffset="0%">
-            {text}
+            <tspan className="responsive-text">{text}</tspan>
           </textPath>
         </text>
+        <style jsx>{`
+          @media (max-width: 768px) {
+            .responsive-text {
+              font-size: 20px;
+            }
+          }
+          @media (max-width: 480px) {
+            .responsive-text {
+              font-size: 16px;
+            }
+          }
+        `}</style>
       </StyledSVG>
     </CurvedTextContainer>
   );

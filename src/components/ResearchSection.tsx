@@ -12,12 +12,30 @@ const ResearchContainer = styled.section`
   background-color: var(--color-light-blue);
   color: var(--color-navy);
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
   font-size: 3rem;
   margin-bottom: 2rem;
   color: var(--color-navy);
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const ResearchGrid = styled.div`
@@ -26,6 +44,16 @@ const ResearchGrid = styled.div`
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const ResearchCard = styled.div`
@@ -34,18 +62,40 @@ const ResearchCard = styled.div`
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: left;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const CardTitle = styled.h3`
   font-size: 1.8rem;
   color: var(--color-navy);
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+  }
 `;
 
 const CardDescription = styled.p`
   font-size: 1rem;
   line-height: 1.5;
   color: #333;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
 `;
 
 const ResearchSection: React.FC = () => {

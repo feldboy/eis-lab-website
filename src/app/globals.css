@@ -2,12 +2,26 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* Responsive improvements */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Touch targets for mobile */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 /* Remove default Next.js styles if any */
