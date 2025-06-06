@@ -13,6 +13,7 @@ const BestChoicesContainer = styled.section`
   color: var(--color-white);
   position: relative;
   overflow: hidden;
+  z-index: 2;
 `;
 
 const SectionTitle = styled.h2`
@@ -138,6 +139,8 @@ const NavigationDots = styled.div`
   justify-content: center;
   gap: 1rem;
   margin-bottom: 3rem;
+  position: relative;
+  z-index: 10;
 `;
 
 const Dot = styled.button`
@@ -148,6 +151,8 @@ const Dot = styled.button`
   background: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
 
   &.active {
     background: var(--color-white);

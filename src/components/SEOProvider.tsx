@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 interface SEOProps {
   title?: string;
@@ -23,52 +22,73 @@ export const SEO: React.FC<SEOProps> = ({
   const siteTitle = "EIS Lab";
   const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 
-  return (
-    <Helmet>
-      {/* Basic Meta Tags */}
-      <title>{fullTitle}</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
-      <meta name="author" content="EIS Lab" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      
-      {/* Open Graph Meta Tags */}
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:url" content={url} />
-      <meta property="og:type" content={type} />
-      <meta property="og:site_name" content={siteTitle} />
-      
-      {/* Twitter Card Meta Tags */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
-      
-      {/* Additional Meta Tags */}
-      <meta name="robots" content="index, follow" />
-      <meta name="language" content="English" />
-      <meta name="theme-color" content="#1E1A4A" />
-      
-      {/* Structured Data */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "EIS Lab",
-          "description": description,
-          "url": url,
-          "logo": `${url}/images/logo.png`,
-          "sameAs": [
-            "https://facebook.com/eislab",
-            "https://instagram.com/eislab",
-            "https://twitter.com/eislab"
-          ]
-        })}
-      </script>
-    </Helmet>
-  );
+  React.useEffect(() => {
+    // Update document title
+    document.title = fullTitle;
+    
+    // Update meta tags
+    const updateMetaTag = (name: string, content: string, property?: boolean) => {
+      const selector = property ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+      let meta = document.querySelector(selector) as HTMLMetaElement;
+      if (!meta) {
+        meta = document.createElement('meta');
+        if (property) {
+          meta.setAttribute('property', name);
+        } else {
+          meta.setAttribute('name', name);
+        }
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+
+    // Basic Meta Tags
+    updateMetaTag('description', description);
+    updateMetaTag('keywords', keywords);
+    updateMetaTag('author', 'EIS Lab');
+    updateMetaTag('robots', 'index, follow');
+    updateMetaTag('language', 'English');
+    updateMetaTag('theme-color', '#1E1A4A');
+    
+    // Open Graph Meta Tags
+    updateMetaTag('og:title', fullTitle, true);
+    updateMetaTag('og:description', description, true);
+    updateMetaTag('og:image', image, true);
+    updateMetaTag('og:url', url, true);
+    updateMetaTag('og:type', type, true);
+    updateMetaTag('og:site_name', siteTitle, true);
+    
+    // Twitter Card Meta Tags
+    updateMetaTag('twitter:card', 'summary_large_image');
+    updateMetaTag('twitter:title', fullTitle);
+    updateMetaTag('twitter:description', description);
+    updateMetaTag('twitter:image', image);
+
+    // Add structured data
+    const existingScript = document.querySelector('script[type="application/ld+json"]');
+    if (existingScript) {
+      existingScript.remove();
+    }
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "EIS Lab",
+      "description": description,
+      "url": url,
+      "logo": `${url}/images/logo.png`,
+      "sameAs": [
+        "https://facebook.com/eislab",
+        "https://instagram.com/eislab",
+        "https://twitter.com/eislab"
+      ]
+    });
+    document.head.appendChild(script);
+  }, [fullTitle, description, keywords, image, url, type]);
+
+  return null;
 };
 
 interface SEOProviderProps {
@@ -76,9 +96,5 @@ interface SEOProviderProps {
 }
 
 export const SEOProvider: React.FC<SEOProviderProps> = ({ children }) => {
-  return (
-    <HelmetProvider>
-      {children}
-    </HelmetProvider>
-  );
+  return <>{children}</>;
 };

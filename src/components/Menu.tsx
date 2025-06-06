@@ -294,12 +294,12 @@ const Menu: React.FC<MenuProps> = ({ isOpen, toggleMenu }) => {
       <CircleBackground className="purple-circle" ref={el => { if (el) circlesRef.current[2] = el; }} />
       <MenuContent>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          <li><MenuItem href="/" ref={el => { if (el) itemsRef.current[0] = el; }} onClick={handleMenuItemClick}>Home</MenuItem></li>
-          <li><MenuItem href="/products" ref={el => { if (el) itemsRef.current[1] = el; }} onClick={handleMenuItemClick}>Products</MenuItem></li>
-          <li><MenuItem href="/locations" ref={el => { if (el) itemsRef.current[2] = el; }} onClick={handleMenuItemClick}>Locations</MenuItem></li>
-          <li><MenuItem href="/franchise" ref={el => { if (el) itemsRef.current[3] = el; }} onClick={handleMenuItemClick}>Franchise</MenuItem></li>
-          <li><MenuItem href="/about" ref={el => { if (el) itemsRef.current[4] = el; }} onClick={handleMenuItemClick}>About</MenuItem></li>
-          <li><MenuItem href="/contact" ref={el => { if (el) itemsRef.current[5] = el; }} onClick={handleMenuItemClick}>Contact</MenuItem></li>
+          <li><MenuItem data-scroll-to="hero" ref={el => { if (el) itemsRef.current[0] = el; }} onClick={handleMenuItemClick}>Home</MenuItem></li>
+          <li><MenuItem data-scroll-to="showcase" ref={el => { if (el) itemsRef.current[1] = el; }} onClick={handleMenuItemClick}>Products</MenuItem></li>
+          <li><MenuItem data-scroll-to="locations" ref={el => { if (el) itemsRef.current[2] = el; }} onClick={handleMenuItemClick}>Locations</MenuItem></li>
+          <li><MenuItem data-scroll-to="franchise" ref={el => { if (el) itemsRef.current[3] = el; }} onClick={handleMenuItemClick}>Franchise</MenuItem></li>
+          <li><MenuItem data-scroll-to="values" ref={el => { if (el) itemsRef.current[4] = el; }} onClick={handleMenuItemClick}>About</MenuItem></li>
+          <li><MenuItem data-scroll-to="contact" ref={el => { if (el) itemsRef.current[5] = el; }} onClick={handleMenuItemClick}>Contact</MenuItem></li>
         </ul>
       </MenuContent>
     </MenuOverlay>

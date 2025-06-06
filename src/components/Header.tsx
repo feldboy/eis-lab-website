@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 import Menu from './Menu'; // Import the new Menu component
 
 const HeaderContainer = styled.header`
@@ -29,7 +30,7 @@ const HeaderContainer = styled.header`
   }
 `;
 
-const Logo = styled.a`
+const Logo = styled(Link)`
   font-size: 2rem;
   font-weight: 900;
   background: linear-gradient(45deg, ${props => props.theme.colors.primary}, ${props => props.theme.colors.secondary});

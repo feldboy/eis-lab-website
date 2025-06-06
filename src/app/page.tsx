@@ -9,11 +9,12 @@ import BestChoicesSection from '../components/BestChoicesSection';
 import FindUsSection from '../components/FindUsSection';
 import CommunitySection from '../components/CommunitySection';
 import FranchiseSection from '../components/FranchiseSection';
+import ContactSection from '../components/ContactSection';
+import Enhanced3DFloatingElements from '../components/Enhanced3DFloatingElements';
 
 // Disable static generation for this page to avoid SSR issues with animations
 export const dynamic = 'force-dynamic';
 import Footer from '../components/Footer';
-import FloatingElements from '../components/FloatingElements';
 import CurvedText from '../components/CurvedText';
 import { SEO } from '../components/SEOProvider';
 
@@ -39,7 +40,7 @@ const FloatingElementsContainer = styled.div`
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
 `;
 
 const CurvedTextSection = styled.section`
@@ -59,13 +60,15 @@ export default function Home() {
       />
       
       <FloatingElementsContainer>
-        <FloatingElements count={8} />
+        <Enhanced3DFloatingElements count={6} iceCreamCount={3} />
       </FloatingElementsContainer>
       
       <Header />
       <MainContent>
-        <HeroSection />
-        <CurvedTextSection>
+        <section data-section="hero">
+          <HeroSection />
+        </section>
+        <CurvedTextSection data-section="demo">
           <CurvedText 
             text="Innovative Ice Cream Experience Laboratory"
             radius={150}
@@ -74,11 +77,24 @@ export default function Home() {
             direction="clockwise"
           />
         </CurvedTextSection>
-        <ValuesSection />
-        <BestChoicesSection />
-        <FindUsSection />
-        <CommunitySection />
-        <FranchiseSection />
+        <section data-section="values">
+          <ValuesSection />
+        </section>
+        <section data-section="choices">
+          <BestChoicesSection />
+        </section>
+        <section data-section="locations">
+          <FindUsSection />
+        </section>
+        <section data-section="community">
+          <CommunitySection />
+        </section>
+        <section data-section="franchise">
+          <FranchiseSection />
+        </section>
+        <section data-section="contact" id="contact">
+          <ContactSection />
+        </section>
       </MainContent>
       <Footer />
     </>

@@ -12,6 +12,7 @@ const ValuesContainer = styled.section`
   background: var(--color-white);
   position: relative;
   overflow: hidden;
+  z-index: 2;
 `;
 
 const ValueSection = styled.div`
@@ -34,6 +35,12 @@ const ValueSection = styled.div`
     background: var(--color-white);
     color: var(--color-navy);
   }
+
+  /* Ensure text content has higher z-index than floating icons */
+  & > div {
+    position: relative;
+    z-index: 5;
+  }
 `;
 
 const CurvedTitle = styled.h2`
@@ -44,6 +51,7 @@ const CurvedTitle = styled.h2`
   max-width: 800px;
   line-height: 1.1;
   position: relative;
+  z-index: 10; /* Ensure text is always above floating elements */
   /* Performance optimizations */
   will-change: transform;
   backface-visibility: hidden;
@@ -55,6 +63,8 @@ const CurvedTitle = styled.h2`
     animation: subtle-curve 8s ease-in-out infinite;
     will-change: transform;
     backface-visibility: hidden;
+    word-wrap: break-word;
+    hyphens: auto;
   }
 
   @keyframes subtle-curve {
@@ -65,6 +75,20 @@ const CurvedTitle = styled.h2`
       transform: perspective(600px) rotateX(3deg) translateZ(0); 
     }
   }
+
+  @media (max-width: 768px) {
+    line-height: 1.2;
+    .curved-text {
+      word-break: break-word;
+    }
+  }
+
+  @media (max-width: 480px) {
+    line-height: 1.3;
+    .curved-text {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+    }
+  }
 `;
 
 const FloatingIceCreamIcon = styled.div`
@@ -72,18 +96,42 @@ const FloatingIceCreamIcon = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  top: 20%;
-  right: 15%;
+  /* Move icons to corners to avoid text overlap */
+  top: 10%;
+  right: 5%;
   /* Use CSS animations for better performance */
   animation: float-gentle 6s ease-in-out infinite;
   will-change: transform;
   backface-visibility: hidden;
   transform: translateZ(0); /* Force hardware acceleration */
+  z-index: 1; /* Keep behind text but visible */
 
-  &.strawberry { background: var(--color-salmon-pink); }
-  &.vanilla { background: var(--color-yellow); }
-  &.mint { background: #90EE90; }
-  &.chocolate { background: #8B4513; }
+  &.strawberry { 
+    background: var(--color-salmon-pink); 
+    bottom: 10%;
+    right: 5%;
+    top: auto;
+  }
+  &.vanilla { 
+    background: var(--color-yellow); 
+    top: 10%;
+    left: 5%;
+    right: auto;
+  }
+  &.mint { 
+    background: #90EE90; 
+    top: 15%;
+    right: 1%;
+    width: 45px;
+    height: 45px;
+  }
+  &.chocolate { 
+    background: #8B4513; 
+    bottom: 10%;
+    left: 5%;
+    right: auto;
+    top: auto;
+  }
 
   @keyframes float-gentle {
     0%, 100% { 
@@ -97,7 +145,29 @@ const FloatingIceCreamIcon = styled.div`
   @media (max-width: 768px) {
     width: 40px;
     height: 40px;
-    right: 10%;
+    
+    &.strawberry, &.chocolate {
+      bottom: 5%;
+    }
+    &.vanilla, &.mint {
+      top: 5%;
+    }
+    &.strawberry, &.mint {
+      right: 1%;
+    }
+    &.vanilla, &.chocolate {
+      left: 3%;
+    }
+    &.mint {
+      width: 30px;
+      height: 30px;
+      top: 8%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 30px;
+    height: 30px;
   }
 `;
 
@@ -113,6 +183,8 @@ const AboutButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 2rem;
+  position: relative;
+  z-index: 10;
 
   &:hover {
     background: var(--color-navy);

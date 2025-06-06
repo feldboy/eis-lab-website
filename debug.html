@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section Scroll Test</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            z-index: 1000;
+        }
+        
+        nav a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        [data-section="hero"] { background: #ff6b6b; }
+        [data-section="demo"] { background: #4ecdc4; }
+        [data-section="values"] { background: #45b7d1; }
+        [data-section="franchise"] { background: #f9ca24; }
+        [data-section="contact"] { background: #6c5ce7; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a data-scroll-to="hero">Home</a>
+        <a data-scroll-to="demo">Demo</a>
+        <a data-scroll-to="values">About</a>
+        <a data-scroll-to="franchise">Services</a>
+        <a data-scroll-to="contact">Contact</a>
+    </nav>
+
+    <section data-section="hero">
+        <div>Hero Section</div>
+    </section>
+    
+    <section data-section="demo">
+        <div>Demo Section</div>
+    </section>
+    
+    <section data-section="values">
+        <div>Values Section</div>
+    </section>
+    
+    <section data-section="franchise">
+        <div>Franchise Section</div>
+    </section>
+    
+    <section data-section="contact">
+        <div>Contact Section</div>
+    </section>
+
+    <script>
+        // Test the scroll navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('[data-scroll-to]');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-scroll-to');
+                    const targetElement = document.querySelector(`[data-section="${targetId}"]`);
+                    
+                    if (targetElement) {
+                        console.log('Scrolling to:', targetId);
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    } else {
+                        console.log('Target not found:', targetId);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -24,7 +24,7 @@ const FloatingElement = styled.div<FloatingElementProps>`
   left: ${props => props.$left || 'auto'};
   right: ${props => props.$right || 'auto'};
   bottom: ${props => props.$bottom || 'auto'};
-  z-index: ${props => props.$zIndex || 1};
+  z-index: ${props => props.$zIndex || -1};
   opacity: 0.8;
   filter: blur(0.5px);
   will-change: transform;
@@ -110,7 +110,7 @@ const FloatingElements: React.FC<FloatingElementsProps> = ({ count = 8, classNam
         },
         scoopType: scoopTypes[index % scoopTypes.length],
         size: `${40 + rand3 * 40}px`,
-        zIndex: Math.floor(rand4 * 5) + 1,
+        zIndex: Math.floor(rand4 * 3) - 1, // Changed to range from -1 to 1
       };
     };
     
@@ -136,6 +136,26 @@ const FloatingElements: React.FC<FloatingElementsProps> = ({ count = 8, classNam
           delay: element.dataset.index ? parseInt(element.dataset.index) * 0.2 : 0, // Deterministic delay
         });
       }
+    });
+
+    // Add scroll-based fade out animation
+    import('gsap').then(({ gsap }) => {
+      import('gsap/dist/ScrollTrigger').then(({ ScrollTrigger }) => {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        if (containerRef.current) {
+          gsap.to(containerRef.current, {
+            opacity: 0,
+            duration: 1,
+            scrollTrigger: {
+              trigger: document.body,
+              start: "top top",
+              end: "+=300px",
+              scrub: 1,
+            }
+          });
+        }
+      });
     });
 
     // Cleanup function

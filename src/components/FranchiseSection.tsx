@@ -87,10 +87,18 @@ const CTAButton = styled.button`
 
 const VisualContent = styled.div`
   position: relative;
-  height: 500px;
+  height: 600px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 968px) {
+    height: auto;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 0;
+  }
 `;
 
 const FloatingCard = styled.div`
@@ -103,24 +111,46 @@ const FloatingCard = styled.div`
   text-align: center;
   color: white;
   min-width: 200px;
+  max-width: 220px;
   position: absolute;
 
   &:nth-child(1) {
-    top: 0;
-    left: 0;
+    top: 10%;
+    left: 5%;
     transform: rotate(-5deg);
+    z-index: 3;
   }
 
   &:nth-child(2) {
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%) rotate(5deg);
+    top: 20%;
+    right: 10%;
+    transform: rotate(5deg);
+    z-index: 2;
   }
 
   &:nth-child(3) {
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) rotate(-3deg);
+    bottom: 15%;
+    left: 30%;
+    transform: rotate(-3deg);
+    z-index: 1;
+  }
+
+  @media (max-width: 968px) {
+    position: relative;
+    margin: 20px auto;
+    max-width: 280px;
+    transform: none !important;
+
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3) {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      transform: none;
+    }
   }
 `;
 
@@ -232,15 +262,34 @@ const FranchiseSection: React.FC = () => {
           }
         );
 
-        // Continuous floating animation
-        gsap.to(cards, {
-          y: '-=10',
-          rotation: '+=2',
-          duration: 3,
+        // Continuous floating animation with controlled movement
+        gsap.to(cards[0], {
+          y: '+=15',
+          rotation: '+=3',
+          duration: 4,
           ease: 'power1.inOut',
-          stagger: 0.5,
           yoyo: true,
           repeat: -1
+        });
+
+        gsap.to(cards[1], {
+          y: '-=12',
+          rotation: '-=2',
+          duration: 5,
+          ease: 'power1.inOut',
+          yoyo: true,
+          repeat: -1,
+          delay: 0.5
+        });
+
+        gsap.to(cards[2], {
+          y: '+=10',
+          rotation: '+=4',
+          duration: 3.5,
+          ease: 'power1.inOut',
+          yoyo: true,
+          repeat: -1,
+          delay: 1
         });
       }
     });
