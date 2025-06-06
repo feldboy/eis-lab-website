@@ -82,14 +82,14 @@ export default function AboutPage() {
           <h3>🧪 Research & Development</h3>
           <p>
             Our state-of-the-art laboratory develops new textures, flavors, 
-            and preservation techniques that push the boundaries of what's possible in frozen desserts.
+            and preservation techniques that push the boundaries of what&apos;s possible in frozen desserts.
           </p>
         </FeatureCard>
         
         <FeatureCard>
           <h3>🌱 Sustainability</h3>
           <p>
-            We're committed to environmental responsibility through eco-friendly packaging, 
+            We&apos;re committed to environmental responsibility through eco-friendly packaging, 
             local sourcing, and carbon-neutral production processes.
           </p>
         </FeatureCard>
@@ -98,7 +98,7 @@ export default function AboutPage() {
           <h3>🚀 Innovation</h3>
           <p>
             From molecular gastronomy to AI-powered flavor combinations, 
-            we're constantly exploring new frontiers in ice cream technology.
+            we&apos;re constantly exploring new frontiers in ice cream technology.
           </p>
         </FeatureCard>
       </FeatureGrid>

@@ -13,10 +13,8 @@ interface UseBarbaTransitionsOptions {
 
 export const useBarbaTransitions = (options: UseBarbaTransitionsOptions = {}) => {
   const {
-    enableParticles = true,
     enableSoundEffects = false,
     transitionDuration = 1,
-    particleCount = 50
   } = options;
 
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -188,7 +186,7 @@ export const useBarbaTransitions = (options: UseBarbaTransitionsOptions = {}) =>
     if (!audioContextRef.current && enableSoundEffects) {
       try {
         audioContextRef.current = new AudioContext();
-      } catch (e) {
+      } catch {
         console.warn('Web Audio API not supported');
       }
     }

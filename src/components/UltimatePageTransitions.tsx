@@ -13,7 +13,7 @@ const UltimatePageTransitions: React.FC<UltimatePageTransitionsProps> = ({ child
   const wrapperRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
   
-  const { initializeBarba, isTransitioning, currentNamespace } = useBarbaTransitions({
+  const { initializeBarba, isTransitioning } = useBarbaTransitions({
     enableParticles: true,
     enableSoundEffects: true,
     transitionDuration: 1.2,

@@ -63,7 +63,8 @@ const AdvancedBarbaWrapper: React.FC<AdvancedBarbaWrapperProps> = ({ children })
         {
           name: 'particle-explosion',
           priority: 1,
-          leave(data) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          leave(data: any) {
             const current = data.current.container;
             const overlay = createTransitionOverlay();
             const particles = createParticles(overlay, 80);
@@ -161,6 +162,7 @@ const AdvancedBarbaWrapper: React.FC<AdvancedBarbaWrapperProps> = ({ children })
             const timeline = gsap.timeline();
 
             // קיפול כל סקשן בזווית שונה
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             sections.forEach((section: any, index) => {
               timeline.to(section, {
                 rotationX: index % 2 === 0 ? 90 : -90,
@@ -215,6 +217,7 @@ const AdvancedBarbaWrapper: React.FC<AdvancedBarbaWrapperProps> = ({ children })
             const timeline = gsap.timeline();
 
             // כל אלמנט "עף" בכיוון אחר
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             elements.forEach((element: any, index) => {
               const angle = (index / elements.length) * Math.PI * 2;
               const distance = gsap.utils.random(800, 1500);
@@ -241,6 +244,7 @@ const AdvancedBarbaWrapper: React.FC<AdvancedBarbaWrapperProps> = ({ children })
             const timeline = gsap.timeline();
 
             // הגדרת מצב התחלתי - מחוץ למסך
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             elements.forEach((element: any, index) => {
               const angle = (index / elements.length) * Math.PI * 2;
               const distance = gsap.utils.random(800, 1500);
